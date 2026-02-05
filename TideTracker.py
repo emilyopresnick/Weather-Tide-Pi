@@ -12,17 +12,11 @@
 import json
 import platform
 import sys
-import os
 import time
-import traceback
 import zoneinfo
-from idlelib.run import StdOutputFile
-from importlib.util import source_hash
 
 import matplotlib.dates as mdates
-import pandas as pd
 import requests
-from io import BytesIO
 import noaa_coops as nc
 import matplotlib.pyplot as plt
 import numpy as np
@@ -31,9 +25,7 @@ import datetime as dt
 sys.path.append('lib')
 from waveshare_epd import epd7in5_V2
 from PIL import Image, ImageDraw, ImageFont
-from datetime import datetime
 import logging
-import urllib3
 import os
 from dotenv import load_dotenv
 
@@ -163,7 +155,7 @@ Functions and defined variables
 '''
 
 logging.basicConfig(filename='weather_display.log',
-                    level=logging.CRITICAL,
+                    level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
 
