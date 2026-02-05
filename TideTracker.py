@@ -17,10 +17,8 @@ import zoneinfo
 
 import matplotlib.dates as mdates
 import requests
-import noaa_coops as nc
 import matplotlib.pyplot as plt
 import numpy as np
-import datetime as dt
 
 sys.path.append('lib')
 from waveshare_epd import epd7in5_V2
@@ -527,30 +525,6 @@ def plotTide(tideDataHourly):
     #axs.xaxis.set_tick_params(labelsize=20)
     #axs.yaxis.set_tick_params(labelsize=20)
     #plt.show()
-
-
-# Get High and Low tide info
-def HiLo(StationID):
-    # Create Station Object
-    stationdata = nc.Station(StationID)
-
-    # Get today date string
-    today = dt.datetime.now()
-    todaystr = today.strftime("%Y%m%d")
-    # Get yesterday date string
-    tomorrow = today + dt.timedelta(days=1)
-    tomorrowstr = tomorrow.strftime("%Y%m%d")
-
-    # Get Hi and Lo Tide info
-    TideHiLo = stationdata.get_data(
-        begin_date=todaystr,
-        end_date=tomorrowstr,
-        product="predictions",
-        datum="MLLW",
-        interval="hilo",
-        time_zone="lst_ldt")
-
-    return TideHiLo
 
 # Set the font sizes
 font15 = ImageFont.truetype(os.path.join(fontdir, 'Times New Roman.ttf'), 15)
