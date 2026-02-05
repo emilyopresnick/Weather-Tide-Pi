@@ -213,7 +213,7 @@ def write_to_screen(image, sleep_seconds):
     # Initialize the drawing context with template as background
     h_image.paste(screen_output_file, (0, 0))
 
-    h_image.save("/home/pi/last_display.png")
+    h_image.save("/home/soup222/last_display.png")
     epd.display(epd.getbuffer(h_image))
     # Sleep
     epd.sleep() # Put screen to sleep to prevent damage
