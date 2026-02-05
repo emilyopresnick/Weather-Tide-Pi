@@ -21,9 +21,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
-if os.path.exists(libdir):
-    sys.path.append(libdir)
+sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
+
+import waveshare_epd
+print("waveshare_epd imported from:", waveshare_epd.__file__)
 
 from waveshare_epd import epd7in5_V2
 from PIL import Image, ImageDraw, ImageFont
