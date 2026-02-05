@@ -19,8 +19,9 @@ import matplotlib.dates as mdates
 import requests
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
-sys.path.append('lib')
+sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
 from waveshare_epd import epd7in5_V2
 from PIL import Image, ImageDraw, ImageFont
 import logging
