@@ -708,21 +708,22 @@ while True:
     # Initialize the drawing context with template as background
     draw = ImageDraw.Draw(template)
 
-    # # Current weather
-    ## Open icon file
-    icon_image = Image.open(os.path.join(icondir, icon_today))
-    icon_image = icon_image.resize((130,130))
-    # template.paste(icon_image, (64, 80))
-    #
 
+    # Open and resize the icon
+    icon_image = Image.open(os.path.join(icondir, icon_today)).convert("1")  # convert to 1-bit
+    icon_image = icon_image.resize((130, 130))
 
-
+    # Calculate x position
     casa_box_left = 5
     casa_box_width = 280
-
     icon_x = casa_box_left + (casa_box_width - icon_image.width) // 2
-    # print(icon_x)
-    template.paste(icon_image, (icon_x, 70))
+
+    # Create a mask: black pixels drawn, white pixels transparent
+    mask = icon_image.point(lambda x: 0 if x == 0 else 255, mode="1")
+
+    # Paste with mask
+    template.paste(icon_image, (icon_x, 70), mask)
+
 
     text_box_temp = draw.textbbox((0,0), text="Casa Agave", font=font35)
     text_width = text_box_temp[2]-text_box_temp[0]
@@ -771,7 +772,7 @@ while True:
     draw.text((text_x_3,25), 'Today', font=font30, fill=black)
 
 
-    text_box_temp = draw.textbbox((0,0), text=day_of_week + ", " + date_now, font=font15)
+    text_box_temp = draw.textbbox((0,0), text=day_of_week + ", " + date_now, font=font20)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x_3 = today_box_left + (today_box_width-text_width) / 2
     draw.text((text_x_3,60), day_of_week + ", " + date_now, font=font20, fill=black)
@@ -805,18 +806,26 @@ while True:
     tmr_box_left = 554
     tmr_box_width = 238
 
-    text_box_temp = draw.textbbox((0,0), text=day_of_week_tmr + ", " + date_tmr, font=font15)
+    text_box_temp = draw.textbbox((0,0), text=day_of_week_tmr + ", " + date_tmr, font=font20)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x_2 = tmr_box_left + (tmr_box_width-text_width) / 2
     draw.text((text_x_2,60), day_of_week_tmr + ", " + date_tmr, font=font20, fill=black)
 
 
-    icon_image_tmr = Image.open(os.path.join(icondir, nx_icon))
-    icon_image = icon_image_tmr.resize((130,130))
-    icon_x_tmr = tmr_box_left + (tmr_box_width - icon_image.width) // 2
-    # print(icon_x_tmr)
 
-    template.paste(icon_image, (icon_x_tmr, 70))
+    # Open and resize the icon
+    icon_image_tmr = Image.open(os.path.join(icondir, nx_icon)).convert("1")  # convert to 1-bit
+    icon_image = icon_image_tmr.resize((130, 130))
+
+    # Calculate x position
+    icon_x_tmr = tmr_box_left + (tmr_box_width - icon_image.width) // 2
+
+    # Create a mask: black pixels are drawn, white pixels are transparent
+    mask = icon_image.point(lambda x: 0 if x == 0 else 255, mode="1")
+
+    # Paste with mask to simulate transparency
+    template.paste(icon_image, (icon_x_tmr, 70), mask)
+
 
 
     text_box_temp = draw.textbbox((0,0), text='Tomorrow', font=font30)
