@@ -24,7 +24,6 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 
 import waveshare_epd
-print("waveshare_epd imported from:", waveshare_epd.__file__)
 
 from waveshare_epd import epd7in5_V2
 from PIL import Image, ImageDraw, ImageFont
@@ -758,7 +757,7 @@ while True:
 
     icon_x = casa_box_left + (casa_box_width - icon_image.width) // 2
     # print(icon_x)
-    template.paste(icon_image, (icon_x, 80))
+    template.paste(icon_image, (icon_x, 70))
 
     text_box_temp = draw.textbbox((0,0), text="Casa Agave", font=font35)
     text_width = text_box_temp[2]-text_box_temp[0]
@@ -770,7 +769,7 @@ while True:
     text_x = casa_box_left + (casa_box_width-text_width) / 2
     draw.text((text_x,55), "Playa Potrero, Costa Rica", font=font22, fill=black)
 
-    text_box_temp = draw.textbbox((0,0), text=string_temp_current, font=font35)
+    text_box_temp = draw.textbbox((0,0), text=string_temp_current, font=font30)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x = casa_box_left + (casa_box_width-text_width) / 2
     draw.text((text_x,185), string_temp_current, font=font30, fill=black)
@@ -852,7 +851,7 @@ while True:
     icon_x_tmr = tmr_box_left + (tmr_box_width - icon_image.width) // 2
     # print(icon_x_tmr)
 
-    template.paste(icon_image, (icon_x_tmr, 80))
+    template.paste(icon_image, (icon_x_tmr, 70))
 
 
     text_box_temp = draw.textbbox((0,0), text='Tomorrow', font=font30)
@@ -905,8 +904,13 @@ while True:
     for t in today_tides_strings:
         draw.text((60,y_loc), t, font=font22, fill=black)
         y_loc += 25 # This bumps the next prediction down a line
-#
-    # # Save the image for display as PNG
+
+
+    current_time = now_cr.strftime("%H:%M")
+    last_update_string = 'Last Updated: ' + current_time
+    draw.text((20,462), last_update_string, font=font30, fill=black)
+
+# # Save the image for display as PNG
     screen_output_file = os.path.join(picdir, 'screen_output2.png')
     template.save(screen_output_file)
     # Close the template file
