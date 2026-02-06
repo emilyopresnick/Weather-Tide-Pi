@@ -450,14 +450,13 @@ def plotTide(tideDataHourly):
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman']
 
-    tnr = font_manager.FontProperties(fname=os.path.join(fontdir, 'Times New Roman.ttf'))
     # Plot
     fig, axs = plt.subplots(figsize=(10, 4))
     axs.fill_between(times_smooth, y_smooth, color='black', alpha=1.0)
 
     # Titles and labels
-    axs.set_title('Tide - Next 24 Hours', fontproperties=tnr, fontsize=20, color='black')
-    axs.set_ylabel('Water Level (m)', fontproperties=tnr, fontsize=14, color='black')
+    axs.set_title('Tide - Next 24 Hours', fontsize=20, color='black')
+    axs.set_ylabel('Water Level (m)', fontsize=14, color='black')
 
     # X-axis ticks (8 ticks across)
     tick_times = times[::max(1, len(times)//8)]
@@ -476,14 +475,14 @@ def plotTide(tideDataHourly):
             labels.append(t.strftime('%H:%M'))
         prev_day = current_day
 
-    axs.set_xticklabels(labels, fontsize=18, fontproperties=tnr)
+    axs.set_xticklabels(labels, fontsize=18)
 
     # Y-axis increments of 0.5
     ymin = (min(heights) // 0.5) * 0.5
     ymax = (max(heights) // 0.5 + 1) * 0.5
     axs.set_yticks(np.arange(ymin, ymax + 0.5, 0.5))
-    axs.tick_params(axis='y', labelsize=18, colors='black', fontproperties=tnr)
-    axs.tick_params(axis='x', labelsize=18, colors='black', fontproperties=tnr)
+    axs.tick_params(axis='y', labelsize=18, colors='black')
+    axs.tick_params(axis='x', labelsize=18, colors='black')
 
 
     # Styling
