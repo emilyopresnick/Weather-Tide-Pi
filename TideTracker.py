@@ -203,7 +203,7 @@ def is_cache_valid_hourly():
 
 # define funciton for writing image and sleeping for specified time
 def write_to_screen(image, sleep_seconds):
-    print('Writing to screen.')
+    # print('Writing to screen.')
     logging.info("Write to screen")# for debugging
     # Create new blank image template matching screen resolution
     h_image = Image.new('1', (epd.width, epd.height), 255)
@@ -216,7 +216,7 @@ def write_to_screen(image, sleep_seconds):
     epd.display(epd.getbuffer(h_image))
     # Sleep
     epd.sleep() # Put screen to sleep to prevent damage
-    print('Sleeping for ' + str(sleep_seconds) +'.')
+    # print('Sleeping for ' + str(sleep_seconds) +'.')
     time.sleep(sleep_seconds) # Determines refresh rate on data
     epd.init() # Re-Initialize screen
 
@@ -250,12 +250,12 @@ def getWeather(URL):
     while error_connect:
         try:
             # HTTP request
-            print('Attempting to connect to Weather API.')
+            # print('Attempting to connect to Weather API.')
             logging.info("Attempting to connect to Weather API.")
             response = requests.get(URL)
 
             if response.status_code == 200:
-                print('Connection to Open Weather successful.')
+                # print('Connection to Open Weather successful.')
                 logging.info("Connection to Weather API successful.")
                 # get data in jason format
                 data = response.json()
@@ -263,13 +263,13 @@ def getWeather(URL):
                 return data
 
             else:
-                print('Connection to Open Weather successful.')
+                # print('Connection to Open Weather successful.')
                 logging.warning("Connection to Weather API unsuccessful. Status Code: %s.", response.status_code)
                 # display_error("HTTP")
                 return None
         except requests.exceptions.RequestException as e:
             # Call function to display connection error
-            print('Connection error.')
+            # print('Connection error.')
             logging.error("Error connecting: %s", e)
             # display_error('CONNECTION')
 
@@ -322,12 +322,12 @@ def getNewTideData():
                 }
             )
 
-            print('Attempting to connect to Stormglass API...')
+            # print('Attempting to connect to Stormglass API...')
             logging.info("Attempting to connect to Stormglass API.")
 
 
             if response.status_code == 200:
-                print('Connection successful.')
+                # print('Connection successful.')
                 logging.info("Connection to Stormglass API successful.")
 
                 tide_data = response.json()
@@ -341,13 +341,13 @@ def getNewTideData():
                 return tide_data
 
             else:
-                print(f'Connection unsuccessful. Status Code: {response.status_code}')
+                # print(f'Connection unsuccessful. Status Code: {response.status_code}')
                 logging.warning("Connection unsuccessful. Status Code: %s", response.status_code)
                 # display_error("HTTP")
                 return None
 
         except requests.exceptions.RequestException as e:
-            print('Connection error. Retrying...')
+            # print('Connection error. Retrying...')
             logging.error("Error connecting to Stormglass API: %s", e)
             # Optionally, wait a few seconds before retrying
             # display_error('CONNECTION')
@@ -384,12 +384,12 @@ def getNewHourlyTideData():
                 }
             )
 
-            print('Attempting to connect to Stormglass API for Hourly Tides...')
+            # print('Attempting to connect to Stormglass API for Hourly Tides...')
             logging.info("Attempting to connect to Stormglass API for Hourly Tides.")
 
 
             if response_hourly.status_code == 200:
-                print('Connection successful.')
+                # print('Connection successful.')
                 logging.info("Connection to Stormglass API successful.")
 
                 tide_data_hourly = response_hourly.json()
@@ -403,13 +403,13 @@ def getNewHourlyTideData():
                 return tide_data_hourly
 
             else:
-                print(f'Connection unsuccessful. Status Code: {response_hourly.status_code}')
+                # print(f'Connection unsuccessful. Status Code: {response_hourly.status_code}')
                 logging.warning("Connection unsuccessful. Status Code: %s", response_hourly.status_code)
                 # display_error("HTTP")
                 return None
 
         except requests.exceptions.RequestException as e:
-            print('Connection error. Retrying...')
+            # print('Connection error. Retrying...')
             logging.error("Error connecting to Stormglass API: %s", e)
             # Optionally, wait a few seconds before retrying
             # display_error('CONNECTION')
@@ -658,22 +658,22 @@ while True:
     if is_cache_valid():
         with open(CACHE_FILE, "r") as f:
             storm_data = json.load(f)
-        print("Loaded High/Low Tide data from cache.")
+        # print("Loaded High/Low Tide data from cache.")
         logging.info("Loaded High/Low Tide data from cache")
     else:
         storm_data = getNewTideData()
-        print("Fetched new data from Stormglass API for High/Low Tides.")
+        # print("Fetched new data from Stormglass API for High/Low Tides.")
         logging.info("Calling Stormglass API for High/Low Tides")
 
 
     if is_cache_valid_hourly():
         with open(CACHE_FILE_HOURLY, "r") as f:
             hourly_tides = json.load(f)
-        print("Loaded Hourly Tide data from cache.")
+        # print("Loaded Hourly Tide data from cache.")
         logging.info("Loaded Hourly Tide data from cache")
     else:
         hourly_tides = getNewHourlyTideData()
-        print("Fetched new data from Stormglass API for Hourly Tides.")
+        # print("Fetched new data from Stormglass API for Hourly Tides.")
         logging.info("Calling Stormglass API for Hourly Tides")
 
 
@@ -774,7 +774,7 @@ while True:
     text_box_temp = draw.textbbox((0,0), text=day_of_week + ", " + date_now, font=font15)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x_3 = today_box_left + (today_box_width-text_width) / 2
-    draw.text((text_x_3,60), day_of_week + ", " + date_now, font=font15, fill=black)
+    draw.text((text_x_3,60), day_of_week + ", " + date_now, font=font20, fill=black)
 
     y=115
     text_box_temp = draw.textbbox((0,0), text=string_feels_like, font=font20)
@@ -808,7 +808,7 @@ while True:
     text_box_temp = draw.textbbox((0,0), text=day_of_week_tmr + ", " + date_tmr, font=font15)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x_2 = tmr_box_left + (tmr_box_width-text_width) / 2
-    draw.text((text_x_2,60), day_of_week_tmr + ", " + date_tmr, font=font15, fill=black)
+    draw.text((text_x_2,60), day_of_week_tmr + ", " + date_tmr, font=font20, fill=black)
 
 
     icon_image_tmr = Image.open(os.path.join(icondir, nx_icon))
@@ -873,7 +873,7 @@ while True:
 
     current_time = now_cr.strftime("%H:%M")
     last_update_string = 'Last Updated: ' + current_time
-    draw.text((20,462), last_update_string, font=font30, fill=black)
+    draw.text((20,462), last_update_string, font=font15, fill=black)
 
     # # Save the image for display as PNG
     screen_output_file = os.path.join(picdir, 'screen_output2.png')
