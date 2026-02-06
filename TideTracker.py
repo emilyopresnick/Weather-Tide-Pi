@@ -12,11 +12,9 @@
 import json
 import platform
 import sys
-import time
 import zoneinfo
 
 import matplotlib.dates as mdates
-from matplotlib import font_manager
 import requests
 import matplotlib.pyplot as plt
 import numpy as np
@@ -499,7 +497,6 @@ def plotTide(tideDataHourly):
             zorder=10        )
     plt.tight_layout()
     plt.savefig('images/TideLevel2.png', dpi=60)
-    plt.show()
 # now_cr = datetime.now(tz=CR_TZ)
     # end_cr = now_cr + timedelta(hours=24)
 
@@ -579,7 +576,7 @@ while True:
     report = weather_codes.get(weather)
 
     isDay = str (current['is_day'])
-    icon_today = weather_codes_icons.get(report + " " + isDay)
+    icon_today = weather_codes_icons.get(report + " " + isDay, "clear_day.png")
     uvIndex = current['uv_index']
 
     # Daily Weather
@@ -647,7 +644,7 @@ while True:
     tmr_high = format(temp_max_tmr_f, '>.0f') + u'\N{DEGREE SIGN}F / ' + format(temp_max_tmr_c, '>.0f') + u'\N{DEGREE SIGN}C'
     tmr_low = format(temp_min_tmr_f, '>.0f') + u'\N{DEGREE SIGN}F / ' + format(temp_min_tmr_c, '>.0f') + u'\N{DEGREE SIGN}C'
     nx_weather = weather_codes.get(weather_code_tmr)
-    nx_icon = weather_codes_icons.get(nx_weather + " 1")
+    nx_icon = weather_codes_icons.get(nx_weather + " 1", "clear_day.png")
 
     cr_tz = zoneinfo.ZoneInfo("America/Costa_Rica")
 
@@ -715,7 +712,7 @@ while True:
 
     # Open and resize the icon
     icon_imag = Image.open(os.path.join(icondir, icon_today)).convert("1")  # convert to 1-bit
-    icon_image = icon_imag.resize((130, 130))
+    icon_image = icon_imag.resize((100, 100))
 
     # Calculate x position
     icon_x_tmr = casa_box_left + (casa_box_width - icon_image.width) // 2
@@ -724,10 +721,7 @@ while True:
     mask = icon_image.point(lambda x: 255 if x == 0 else 0, mode="1")
 
     # Paste with mask to preserve transparency
-    template.paste(icon_image, (icon_x_tmr, 70), mask)
-
-
-
+    template.paste(icon_image, (icon_x_tmr, 85), mask)
 
 
     text_box_temp = draw.textbbox((0,0), text="Casa Agave", font=font35)
@@ -826,7 +820,7 @@ while True:
 
     # Open and resize the icon
     icon_image_tmr = Image.open(os.path.join(icondir, nx_icon)).convert("1")  # convert to 1-bit
-    icon_image = icon_image_tmr.resize((130, 130))
+    icon_image = icon_image_tmr.resize((100, 100))
 
     # Calculate x position
     icon_x_tmr = tmr_box_left + (tmr_box_width - icon_image.width) // 2
@@ -835,7 +829,7 @@ while True:
     mask = icon_image.point(lambda x: 255 if x == 0 else 0, mode="1")
 
     # Paste with mask to preserve transparency
-    template.paste(icon_image, (icon_x_tmr, 70), mask)
+    template.paste(icon_image, (icon_x_tmr, 85), mask)
 
 
 
@@ -850,7 +844,7 @@ while True:
     # draw.text((560,120), tmr_low, font=font20, fill=black)
 
 
-    draw.text((700,84), tmr_high, font=font15, fill=black)
+    draw.text((720,84), tmr_high, font=font15, fill=black)
     draw.text((575,84), tmr_low, font=font15, fill=black)
 
     text_box_temp = draw.textbbox((0,0), text=sunset_tmr_string, font=font20)
