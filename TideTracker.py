@@ -709,27 +709,23 @@ while True:
     # Initialize the drawing context with template as background
     draw = ImageDraw.Draw(template)
 
-
-
-    icon_image = Image.open(os.path.join(icondir, icon_today))
-    # icon_image = icon_image.resize((130,130))
-    #
     casa_box_left = 5
     casa_box_width = 280
-    #
-    icon_x = casa_box_left + (casa_box_width - icon_image.width) // 2
-    # # print(icon_x)
-    # template.paste(icon_image, (icon_x, 70))
 
-    # Convert icon to 1-bit if needed
-    icon_image = icon_image.convert("1")
-    icon_image = icon_image.resize((130, 130))
 
-    # Create a mask from the icon (white = transparent, black = drawn)
+    # Open and resize the icon
+    icon_imag = Image.open(os.path.join(icondir, icon_today)).convert("1")  # convert to 1-bit
+    icon_image = icon_imag.resize((130, 130))
+
+    # Calculate x position
+    icon_x_tmr = casa_box_left + (casa_box_width - icon_image.width) // 2
+
+    # Create mask: black pixels drawn (255), white pixels transparent (0)
     mask = icon_image.point(lambda x: 255 if x == 0 else 0, mode="1")
 
-    # Paste using the mask
-    template.paste(icon_image, (icon_x, 70), mask)
+    # Paste with mask to preserve transparency
+    template.paste(icon_image, (icon_x_tmr, 70), mask)
+
 
 
 
