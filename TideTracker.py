@@ -709,8 +709,9 @@ while True:
     draw = ImageDraw.Draw(template)
 
 
+
     # Open and resize the icon
-    icon_image = Image.open(os.path.join(icondir, icon_today)).convert("1")  # convert to 1-bit
+    icon_image = Image.open(os.path.join(icondir, icon_today)).convert("1")  # 1-bit
     icon_image = icon_image.resize((130, 130))
 
     # Calculate x position
@@ -718,11 +719,12 @@ while True:
     casa_box_width = 280
     icon_x = casa_box_left + (casa_box_width - icon_image.width) // 2
 
-    # Create a mask: black pixels drawn, white pixels transparent
-    mask = icon_image.point(lambda x: 0 if x == 0 else 255, mode="1")
+    # Correct mask: black pixels are drawn (255), white pixels transparent (0)
+    mask = icon_image.point(lambda x: 255 if x == 0 else 0, mode="1")
 
-    # Paste with mask
+    # Paste using the corrected mask
     template.paste(icon_image, (icon_x, 70), mask)
+
 
 
     text_box_temp = draw.textbbox((0,0), text="Casa Agave", font=font35)
@@ -821,7 +823,7 @@ while True:
     icon_x_tmr = tmr_box_left + (tmr_box_width - icon_image.width) // 2
 
     # Create a mask: black pixels are drawn, white pixels are transparent
-    mask = icon_image.point(lambda x: 0 if x == 0 else 255, mode="1")
+    mask = icon_image.point(lambda x: 225 if x == 0 else 0, mode="1")
 
     # Paste with mask to simulate transparency
     template.paste(icon_image, (icon_x_tmr, 70), mask)
