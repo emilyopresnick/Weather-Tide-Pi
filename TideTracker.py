@@ -648,40 +648,6 @@ while True:
     nx_weather = weather_codes.get(weather_code_tmr)
     nx_icon = weather_codes_icons.get(nx_weather + " 1")
 
-    # Two Day Forcast Strings
-    two_day_high = 'High:\n' + format(temp_max_two_days_f, '>.0f') + u'\N{DEGREE SIGN}F / ' + format(temp_max_two_days_c, '>.0f') + u'\N{DEGREE SIGN}C'
-    two_day_low = 'Low: \n' + format(temp_min_two_days_f, '>.0f') + u'\N{DEGREE SIGN}F / ' + format(temp_min_two_days_c, '>.0f') + u'\N{DEGREE SIGN}C'
-    nx_nx_weather = weather_codes.get(weather_code_two_days)
-    nx_nx_icon = weather_codes_icons.get(nx_nx_weather + " 1")
-
-    # print(LOCATION)
-    # print(string_temp_current)
-    # print(string_feels_like)
-    # print(string_humidity)
-    # print(string_uv_index)
-    # print(string_report)
-    # print(string_temp_max)
-    # print(string_temp_min)
-    # print(icon_today)
-    # print(sunrise_today_string)
-    # print(sunset_today_string)
-    #
-    # print(tmr_high)
-    # print(tmr_low)
-    # print(nx_weather)
-    # print(nx_icon)
-    # print(sunrise_tmr_string)
-    # print(sunset_tmr_string)
-    #
-    # print(two_day_high)
-    # print(two_day_low)
-    # print(nx_nx_weather)
-    # print(nx_nx_icon)
-    # print(sunrise_tmr_tmr_string)
-    # print(sunset_tmr_tmr_string)
-
-    # Last updated time
-    # Costa Rica timezone
     cr_tz = zoneinfo.ZoneInfo("America/Costa_Rica")
 
     # Current local time in Costa Rica
@@ -698,7 +664,6 @@ while True:
         storm_data = getNewTideData()
         print("Fetched new data from Stormglass API for High/Low Tides.")
         logging.info("Calling Stormglass API for High/Low Tides")
-
 
 
     if is_cache_valid_hourly():
@@ -910,7 +875,7 @@ while True:
     last_update_string = 'Last Updated: ' + current_time
     draw.text((20,462), last_update_string, font=font30, fill=black)
 
-# # Save the image for display as PNG
+    # # Save the image for display as PNG
     screen_output_file = os.path.join(picdir, 'screen_output2.png')
     template.save(screen_output_file)
     # Close the template file
