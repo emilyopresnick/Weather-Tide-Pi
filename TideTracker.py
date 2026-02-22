@@ -728,7 +728,7 @@ while True:
     text_box_temp = draw.textbbox((0,0), text="Welcome", font=font35)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x = casa_box_left + (casa_box_width-text_width) / 2
-    draw.text((text_x,10), "Casa Agave", font=font35, fill=black)
+    draw.text((text_x,10), "Welcome", font=font35, fill=black)
 
     text_box_temp = draw.textbbox((0,0), text="Playa Potrero, Costa Rica", font=font22)
     text_width = text_box_temp[2]-text_box_temp[0]
