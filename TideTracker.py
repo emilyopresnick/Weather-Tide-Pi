@@ -425,6 +425,7 @@ def getNewHourlyTideData():
 
 
 def plotTide(tideDataHourly):
+    logging.getLogger('matplotlib').setLevel(logging.ERROR)
     now = datetime.now(CR_TZ)
     start = now.replace(minute=0, second=0, microsecond=0)
     end = start + timedelta(hours=24)
