@@ -28,6 +28,7 @@ import waveshare_epd
 from waveshare_epd import epd7in5_V2
 from PIL import Image, ImageDraw, ImageFont
 import logging
+from logging.handlers import TimedRotatingFileHandler
 import os
 from dotenv import load_dotenv
 
@@ -155,6 +156,12 @@ Functions and defined variables
 
 ****************************************************************
 '''
+log_handler = TimedRotatingFileHandler(
+    'weather_display.log',
+    when='midnight',
+    interval=1,
+    backupCount=90
+)
 
 logging.basicConfig(filename='weather_display.log',
                     level=logging.INFO,
@@ -728,7 +735,7 @@ while True:
     text_box_temp = draw.textbbox((0,0), text="Casa Agave", font=font35)
     text_width = text_box_temp[2]-text_box_temp[0]
     text_x = casa_box_left + (casa_box_width-text_width) / 2
-    draw.text((text_x,10), "Casa Agave", font=font35, fill=black)
+    draw.text((text_x,10), "Love You", font=font35, fill=black)
 
     text_box_temp = draw.textbbox((0,0), text="Playa Potrero, Costa Rica", font=font22)
     text_width = text_box_temp[2]-text_box_temp[0]
@@ -897,5 +904,5 @@ while True:
     # Close the template file
     template.close()
     #
-    write_to_screen(screen_output_file, 600)
+    write_to_screen(screen_output_file, 21600)
     epd.Clear()
