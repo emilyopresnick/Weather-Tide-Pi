@@ -1,14 +1,3 @@
-'''
-****************************************************************
-****************************************************************
-
-                TideTracker for E-Ink Display
-
-                        by Sam Baker
-
-****************************************************************
-****************************************************************
-'''
 import json
 import platform
 import sys
@@ -583,7 +572,7 @@ while True:
     feels_like_c = ftoc(feels_like_f)
     humidity = current['relative_humidity_2m']
     weather = current['weather_code']
-    report = weather_codes.get(weather)
+    report = weather_codes.get(weather, "0")
 
     isDay = str (current['is_day'])
     icon_today = weather_codes_icons.get(report + " " + isDay, "clear_day.png")
@@ -653,7 +642,7 @@ while True:
     # Tomorrow Forcast Strings
     tmr_high = format(temp_max_tmr_f, '>.0f') + u'\N{DEGREE SIGN}F / ' + format(temp_max_tmr_c, '>.0f') + u'\N{DEGREE SIGN}C'
     tmr_low = format(temp_min_tmr_f, '>.0f') + u'\N{DEGREE SIGN}F / ' + format(temp_min_tmr_c, '>.0f') + u'\N{DEGREE SIGN}C'
-    nx_weather = weather_codes.get(weather_code_tmr)
+    nx_weather = weather_codes.get(weather_code_tmr, "0")
     nx_icon = weather_codes_icons.get(nx_weather + " 1", "clear_day.png")
 
     cr_tz = zoneinfo.ZoneInfo("America/Costa_Rica")
